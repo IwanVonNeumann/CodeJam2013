@@ -3,8 +3,27 @@
  */
 public class FairSquare {
 
+    static int k = 9;
+
     public static void main(String[] args) {
 
+        char[] digits = "0123456789".toCharArray();
+
+        String[] n = new String[9];
+
+        for (int i = 0; i < 9; i++) {
+            n[i] = "" + digits[i + 1];
+        }
+
+        for (String s : n) {
+            System.out.println(s);
+        }
+
+        append(n, digits, 1);
+
+        System.out.println("k = " + k);
+
+        /*
         FileManager fm;
 
         fm = new FileManager(
@@ -52,10 +71,23 @@ public class FairSquare {
             System.out.println(min + " " + max + ": " + p);
             String answer = "Case #" + j + ": " + p;
             fm.sendLine(answer);
-            
+
         }
         fm.finish();
+        */
+    }
 
+    public static void append(String[] s, char[] digits, int lvl) {
+        String[] S = new String[s.length * 10];
+        for (int i = 0; i < s.length; i++) {
+            for (int j = 0; j < 10; j++) {
+                S[i * 10 + j] = s[i] + digits[j];
+                //System.out.println(S[i * 10 + j]);
+                k++;
+            }
+        }
+        lvl++;
+        if (lvl < 7) append(S, digits, lvl);
     }
 
     public static boolean isPalindrome(double d) {
