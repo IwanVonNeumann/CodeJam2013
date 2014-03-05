@@ -7,53 +7,42 @@ import java.util.List;
  */
 public class FairSquare {
 
-    static int k = 0;
     static char[] digits = "0123456789".toCharArray();
 
-    static List<Double> fairSquares;
+    static List<Long> fairSquares;
 
     public static void main(String[] args) {
 
-        String[] n = new String[9];
+        fairSquares = new LinkedList<Long>();
 
-        for (int i = 0; i < 9; i++) {
-            n[i] = "" + digits[i + 1];
-        }
-
-        fairSquares = new LinkedList<Double>();
-
-        for (String s : n) {
-            //System.out.println(s);
-            k++;
-            check(s);
-            append(s, 1);
-        }
-
-        System.out.println("k = " + k);
+        generateFairSquares(10000);
 
         Collections.sort(fairSquares);
 
         System.out.println("List:");
 
-        for (Double d : fairSquares) {
-            System.out.println(d);
+        for (Long i : fairSquares) {
+            System.out.format("%d\t\t\t%.0f%n", i, Math.sqrt(i));
         }
 
-        //generateNumbers(1, 1050);
-        //printAllFairSquares(1, 100000);
 
-        generateFairSquares(1, 20);
+
+
+        //generateFairSquares(20);
+
         /*
-        1
-        4
-        9
-        121
-        484
-        10201
-        12321
-        14641
-        40804
-        44944
+        printAllFairSquares(1, 100000);
+        :
+        1       1
+        4       2
+        9       3
+        121     11
+        484     22
+        10201   101
+        12321   111
+        14641   121
+        40804   202
+        44944   212
         */
 
         /*
@@ -90,86 +79,36 @@ public class FairSquare {
         */
     }
 
-    public static void generateNumbers(double min, double max) {
-        double i = min;
-
-        while ((Math.abs(max + 1 - i)) > 1E-10) {
-            String s = doubleToString(i);
-            System.out.println(s);
-            i++;
+    public static void generateFairSquares(long max) {
+        for (int j = 1; j <= 9; j++) {
+            //System.out.println(j);
+            check(j);
         }
-    }
-
-    public static void generateFairSquares(double min, double max) {
-        double i = min;
         String x;
         String r;
-        while ((Math.abs(max + 1 - i)) > 1E-10) {
-            String s = doubleToString(i);
+        for (long i = 1; i <= max; i++) {
+            String s = Long.toString(i);
+            //System.out.println(s);
             r = reverse(s);
             x = s + r;
-            System.out.println(x);
+            check(x);
             for (char c : digits) {
                 x = s + c + r;
-                System.out.println(x);
-            }
-            i++;
-        }
-    }
-
-
-    public static void printAllFairSquares(double min, double max) {
-        double i = min;
-        double j = i;
-
-        while ((Math.abs(max + 1 - j)) > 1E-10) {
-            i = j;
-            j++;
-            if (!isPalindrome(i)) {
-                continue;
-            }
-            if (!isSquare(i)) {
-                continue;
-            }
-            String s = doubleToString(Math.sqrt(i));
-            if (!isPalindrome(s)) {
-                continue;
-            }
-            System.out.println(doubleToString(i));
-
-        }
-    }
-
-    public static void append(String s, int lvl) {
-        String[] S = new String[10];
-        String x;
-        String r;
-        for (int i = 0; i < 10; i++) {
-            S[i] = s + digits[i];
-            //System.out.println(S[i]);
-            k++;
-            r = reverse(S[i]);
-            x = S[i] + r;
-            check(x);
-            for (int j = 0; j < 10; j++) {
-                x = S[i] + digits[j] + r;
                 check(x);
-            }
-        }
-        lvl++;
-        if (lvl < 4) {
-            for (String y : S) {
-                append(y, lvl);
             }
         }
     }
 
     public static void check(String s) {
-        if (squareIsPalindrome(s)) {
-            double x = Double.parseDouble(s);
-            double x2 = x * x;
-            fairSquares.add(x2);
-            //System.out.print(s + "\t" + doubleToString(x2) + "\n");
+        long i  = Long.parseLong(s);
+        check(i);
+    }
+
+    public static void check(long d) {
+        long x = d * d;
+        //System.out.format("%.0f\t\t\t%.0f%n", d, x);
+        if (isPalindrome(x)) {
+            fairSquares.add(x);
         }
     }
 
@@ -177,27 +116,15 @@ public class FairSquare {
         return new StringBuilder(s).reverse().toString();
     }
 
-    public static boolean squareIsPalindrome(String s) {
-        double x = Double.parseDouble(s);
-        //System.out.println(x);
-        double x2 = x * x;
-        //System.out.println(x2);
-        String i = doubleToString(x2);
-        //System.out.println(i);
-        boolean p = isPalindrome(i);
-        //System.out.println(p);
-        return p;
-    }
-
-    public static boolean isPalindrome(double d) {
-        String s = doubleToString(d);
+    public static boolean isPalindrome(long i) {
+        String s = Long.toString(i);
         return isPalindrome(s);
     }
 
     public static boolean isPalindrome(String s) {
         int n = s.length();
         int k = n / 2;
-        boolean p = true;
+        boolean p;// = true;
         for (int i = 0; i < k; i++) {
             /*System.out.println("Step " + i);
             System.out.println("Comparing " + s.charAt(i) + " and " +
@@ -209,14 +136,4 @@ public class FairSquare {
         return true;
     }
 
-    public static boolean isSquare(double d) {
-        double r = Math.floor(Math.sqrt(d));
-        return Math.abs(d - r * r) < 1E-10;
-    }
-
-    public static String doubleToString(double d) {
-        String s = Double.toString(d);
-        String p = s.substring(0, s.length() - 2);
-        return p;
-    }
 }
