@@ -74,6 +74,16 @@ public class FileManager {
         return v;
     }
 
+    public long[] getLongVector() {
+        String[] s = getLine().split(" ");
+        int k = s.length;
+        long[] v = new long[k];
+        for (int i = 0; i < k; i++) {
+            v[i] = Long.parseLong(s[i].trim());
+        }
+        return v;
+    }
+
     public double[] getDoubleVector()
     {
         String[] s = getLine().split(" ");

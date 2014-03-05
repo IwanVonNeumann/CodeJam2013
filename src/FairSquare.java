@@ -1,4 +1,5 @@
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,9 +14,75 @@ public class FairSquare {
 
     public static void main(String[] args) {
 
+        generateList(10000000);
+
+        FileManager fm;
+
+        /*fm = new FileManager(
+                "D:\\Google2013\\C-small-practice.in",
+                "D:\\Google2013\\C-small-practice.out");*/
+
+
+        /*
+        fm = new FileManager(
+                "D:\\Google2013\\C-large-practice-1.in",
+                "D:\\Google2013\\C-large-practice-1.out");
+
+
+        int k = fm.getCases();
+
+        System.out.println("Cases: " + k);
+
+        for (int j = 1; j <= k; j++) {
+
+            long[] bounds = fm.getLongVector();
+            long min = bounds[0];
+            long max = bounds[1];
+
+            Iterator x = fairSquares.listIterator(0);
+
+            int p = 0;
+
+            Long i = Long.valueOf(0);
+
+            while (x.hasNext()) {
+                i = (Long) x.next();
+                //System.out.println(i);
+                if (i >= min) {
+                    p++;
+                    break;
+                }
+            }
+
+            if (i > max) {
+                p--;
+            } else
+
+            while (x.hasNext()) {
+                i = (Long) x.next();
+                p++;
+                //System.out.println(i);
+                if (i > max) {
+                    p--;
+                    break;
+                }
+            }
+
+
+            System.out.println(min + " " + max + ": " + p);
+            String answer = "Case #" + j + ": " + p;
+            System.out.println(answer);
+            fm.sendLine(answer);
+
+        }
+        fm.finish();
+        */
+    }
+
+    public static void generateList(long max) {
         fairSquares = new LinkedList<Long>();
 
-        generateFairSquares(10000);
+        generateFairSquares(max);
 
         Collections.sort(fairSquares);
 
@@ -24,59 +91,6 @@ public class FairSquare {
         for (Long i : fairSquares) {
             System.out.format("%d\t\t\t%.0f%n", i, Math.sqrt(i));
         }
-
-
-
-
-        //generateFairSquares(20);
-
-        /*
-        printAllFairSquares(1, 100000);
-        :
-        1       1
-        4       2
-        9       3
-        121     11
-        484     22
-        10201   101
-        12321   111
-        14641   121
-        40804   202
-        44944   212
-        */
-
-        /*
-        FileManager fm;
-
-        fm = new FileManager(
-                "D:\\Google2013\\C-small-practice.in",
-                "D:\\Google2013\\C-small-practice.out");
-
-        fm = new FileManager(
-                "D:\\Google2013\\C-large-practice-1.in",
-                "D:\\Google2013\\C-large-practice-1.out");
-
-        int k = fm.getCases();
-
-        System.out.println("Cases: " + k);
-
-        for (int j = 1; j <= k; j++) {
-
-            double[] bounds = fm.getDoubleVector();
-            double min = bounds[0];
-            double max = bounds[1];
-
-            double i = min;
-
-            int p = 0;
-
-            System.out.println(min + " " + max + ": " + p);
-            String answer = "Case #" + j + ": " + p;
-            fm.sendLine(answer);
-
-        }
-        fm.finish();
-        */
     }
 
     public static void generateFairSquares(long max) {
@@ -100,7 +114,7 @@ public class FairSquare {
     }
 
     public static void check(String s) {
-        long i  = Long.parseLong(s);
+        long i = Long.parseLong(s);
         check(i);
     }
 
